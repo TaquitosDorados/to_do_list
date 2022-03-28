@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {v4 as uuidv4} from 'uuid';
+import List from './List';
 
 class todo extends Component {
     constructor() {
@@ -52,6 +53,28 @@ class todo extends Component {
         }
     }
 
+    markAsCompleted = id => {
+        const {items} = this.state;
+        const foundTask = items.find(item => item.id === id);
+
+        foundTask.complete = true;
+
+        this.setState({
+            items:[
+                ...this.state.items,
+            ]
+        })
+    }
+
+    removeTask = id => {
+        const {items} = this.state;
+        const filteredItems = items.filter(item => item.id !== id);
+
+        this.setState({
+            items: filteredItems,
+        })
+    }
+
     render() {
         
         return (
@@ -63,15 +86,7 @@ class todo extends Component {
                     <input type="text" value = {this.state.task} onChange = {this.handleOnChange}></input>
                 </form>
 
-                <ul>
-                    {
-                        this.state.items.map((item) => (
-                            <li>
-                                {item.task}
-                            </li>
-                        ))
-                    }
-                </ul>
+                <List items = {this.state.items} markAsCompleted = {this.markAsCompleted}  removeTask = {this.removeTask}/>
             </div>
         );
     }
