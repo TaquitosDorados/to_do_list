@@ -57,7 +57,7 @@ class todo extends Component {
         const {items} = this.state;
         const foundTask = items.find(item => item.id === id);
 
-        foundTask.complete = true;
+        foundTask.complete = !foundTask.complete;
 
         this.setState({
             items:[
